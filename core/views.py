@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic import View
+from .models import Master, Service, Visit
+from .forms import VisitForm
 
 MENU = [
     {'title': 'Главная', 'url': '/', 'active': True},
@@ -33,3 +36,30 @@ class ThanksView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['menu'] = MENU
         return context
+
+
+
+
+class IndexView(View):
+    def get(self, request):
+        context = {
+            'menu': MENU,
+            'masters': Master.objects.all(),
+            'services': Service.objects.all(),
+            'form': VisitForm()
+        }
+        return render(request, 'main.html', context)
+
+    def post(self, request):
+        form = VisitForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('thanks')
+        
+        context = {
+            'menu': MENU,
+            'masters': Master.objects.all(),
+            'services': Service.objects.all(),
+            'form': form
+        }
+        return render(request, 'main.html', context)
