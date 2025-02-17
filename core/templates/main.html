@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Барбершоп "Арбуз"{% endblock %}
+
+{% block content %}
+<!-- Мастера -->
+<section id="masters" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Наши мастера</h2>
+        <div class="row">
+            {% for master in masters %}
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    {% if master.photo %}
+                    <img src="{{ master.photo.url }}" class="card-img-top rounded-circle mx-auto mt-3" 
+                         style="width: 200px; height: 200px; object-fit: cover;" alt="{{ master.first_name }}">
+                    {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" class="card-img-top rounded-circle mx-auto mt-3" 
+                         style="width: 200px; height: 200px; object-fit: cover;" alt="{{ master.first_name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ master.first_name }}</h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Услуги -->
+<section id="services" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Наши услуги</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Описание</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for service in services %}
+                    <tr>
+                        <td>{{ service.name }}</td>
+                        <td>{{ service.description }}</td>
+                        <td>{{ service.price }} ₽</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Форма записи -->
+<section id="orderForm" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Записаться на стрижку</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100">Записаться</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
