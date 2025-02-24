@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.shortcuts import redirect
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView
 from .models import Master, Service, Visit
-from .forms import VisitForm
+from .forms import VisitForm, ReviewForm
+from django.db.models import Q
 
 MENU = [
     {'title': 'Главная', 'url': '/', 'active': True},
@@ -12,22 +13,6 @@ MENU = [
     # {'title': 'Оставить отзыв', 'url': '/review/create/', 'active': True},
     {'title': 'Запись на стрижку', 'url': '#orderForm', 'active': True},
 ]
-
-# Импорт базовой вьюхи
-from django.views.generic import View, TemplateView
-
-
-# # Создание класса-наследника View
-# class ThanksView(View):
-#     # Переопределение метода get
-#     def get(self, request):
-#         # Возврат результата
-
-#         context = {
-#             'menu': MENU
-#         }
-#         return render(request, 'thanks.html', context)
-    
 
 
 class ThanksView(TemplateView):
@@ -49,17 +34,14 @@ class IndexView(CreateView):
         return context
     
 
-from django.views.generic import ListView
-from django.shortcuts import redirect
-from django.db.models import Q
-from .models import Visit, Master
+
 
 
 class VisitListView(ListView):
     model = Visit
     template_name = 'visit_list.html'
     context_object_name = 'visits'
-    paginate_by = 1
+    paginate_by = 5
 
     def get_queryset(self):
         """Формируем QuerySet с учетом поиска и фильтрации по мастеру"""
@@ -92,3 +74,14 @@ class VisitListView(ListView):
         if not request.user.is_staff:
             return redirect('main_page')  # Перенаправляем на главную
         return super().dispatch(request, *args, **kwargs)
+
+
+class ReviewCreateView(CreateView):
+    template_name = 'review_form.html'
+    form_class = ReviewForm
+    success_url = '/#reviews'  # Редирект на секцию с отзывами
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = MENU
+        return context

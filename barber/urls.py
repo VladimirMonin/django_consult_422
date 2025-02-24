@@ -3,7 +3,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views
-from core.views import VisitListView
+from core.views import VisitListView, ReviewCreateView
 
 urlpatterns = (
     [
@@ -11,6 +11,7 @@ urlpatterns = (
         path("admin/", admin.site.urls),
         path("thanks/", views.ThanksView.as_view(), name="thanks"),
         path('visits/', VisitListView.as_view(), name='visit_list'),
+        path('review/create/', ReviewCreateView.as_view(), name='review_create'),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
