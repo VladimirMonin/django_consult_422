@@ -1,6 +1,80 @@
 from django.contrib import admin
 from .models import Master, Service, Visit, Review
+from django.db.models import Sum, Count, Q
 
+
+# Определяем кастомные фильтры
+class PriceRangeFilter(admin.SimpleListFilter):
+    # Заголовок фильтра в боковой панели
+    title = 'Ценовая категория'
+    
+    # Имя параметра в URL
+    parameter_name = 'price_range'
+    
+    def lookups(self, request, model_admin):
+        # Определяем варианты для выбора в фильтре
+        return (
+            ('low', 'До 1000₽'),
+            ('medium', '1000₽ - 3000₽'),
+            ('high', 'Более 3000₽'),
+        )
+    
+    def queryset(self, request, queryset):
+        # Логика фильтрации
+        if self.value() == 'low':
+            # Используем подзапрос для вычисления суммы цен услуг
+            # Аннотируем каждую запись суммой цен всех выбранных услуг
+            return queryset.annotate(
+                total_price=Sum('services__price')
+            ).filter(total_price__lte=1000)
+        
+        if self.value() == 'medium':
+            return queryset.annotate(
+                total_price=Sum('services__price')
+            ).filter(total_price__gt=1000, total_price__lte=3000)
+            
+        if self.value() == 'high':
+            return queryset.annotate(
+                total_price=Sum('services__price')
+            ).filter(total_price__gt=3000)
+        
+        return queryset
+
+class RegularClientsFilter(admin.SimpleListFilter):
+    # Заголовок фильтра в боковой панели
+    title = 'Постоянные клиенты'
+    
+    # Имя параметра в URL
+    parameter_name = 'is_regular'
+    
+    def lookups(self, request, model_admin):
+        # Определяем варианты для выбора в фильтре
+        return (
+            ('yes', 'Да (3+ записи)'),
+            ('no', 'Нет (менее 3 записей)'),
+        )
+    
+    def queryset(self, request, queryset):
+        # Логика фильтрации
+        if self.value() == 'yes':
+            # Получаем телефоны клиентов, у которых 3 и более записей
+            regular_phones = Visit.objects.values('phone').annotate(
+                visit_count=Count('id')
+            ).filter(visit_count__gte=3).values_list('phone', flat=True)
+            
+            # Фильтруем записи по этим телефонам
+            return queryset.filter(phone__in=regular_phones)
+            
+        if self.value() == 'no':
+            # Получаем телефоны клиентов с менее чем 3 записями
+            non_regular_phones = Visit.objects.values('phone').annotate(
+                visit_count=Count('id')
+            ).filter(visit_count__lt=3).values_list('phone', flat=True)
+            
+            # Фильтруем записи по этим телефонам
+            return queryset.filter(phone__in=non_regular_phones)
+            
+        return queryset
 
 
 # Определяем классы инлайнов
@@ -64,13 +138,13 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(Visit)
 class VisitAdmin(admin.ModelAdmin):
     # Поля которые будут учитываться в поиске
-    search_fields = ('phone', 'name', 'comment')
+    search_fields = ('phone', 'name', 'comment', 'services__name')
     # Отображаемые столбцы в таблице
     list_display = ('name', 'phone', 'created_at', 'status', 'master')
     # Сортировка по дате
     ordering = ('created_at', 'master')
     # Фильтры. По услуге, мастеру, клиенту и дате
-    list_filter = ('master', 'created_at')
+    list_filter = ('master', 'created_at', PriceRangeFilter, RegularClientsFilter)
     filter_horizontal = ('services',)
     # filter_vertical = ('services',)
 
