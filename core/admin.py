@@ -137,10 +137,28 @@ class ReviewAdmin(admin.ModelAdmin):
 #Visit
 @admin.register(Visit)
 class VisitAdmin(admin.ModelAdmin):
+
+    # Метод для кастомного столбца
+    # Добавляем custom метод для отображения общей суммы
+    def get_total_price(self, obj):
+        # Вычисляем сумму всех услуг для данного визита
+        total = obj.services.aggregate(total=Sum('price'))['total']
+        # Проверяем, что сумма не None (если услуг нет)
+        if total:
+            # Форматируем с символом рубля
+            return f"{total:.2f} ₽"
+        return "0.00 ₽"
+
+    # Задаем название столбца в админке
+    get_total_price.short_description = 'Общая сумма'
+    # Включаем возможность сортировки по этому полю
+    get_total_price.admin_order_field = 'services__price'
+
+
     # Поля которые будут учитываться в поиске
     search_fields = ('phone', 'name', 'comment', 'services__name')
     # Отображаемые столбцы в таблице
-    list_display = ('name', 'phone', 'created_at', 'status', 'master')
+    list_display = ('name', 'phone', 'created_at', 'status', 'master', 'get_total_price')
     # Сортировка по дате
     ordering = ('created_at', 'master')
     # Фильтры. По услуге, мастеру, клиенту и дате
