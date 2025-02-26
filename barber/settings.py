@@ -147,3 +147,63 @@ MISTRAL_MODEL = os.getenv('MISTRAL_MODEL')
 
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 YOUR_PERSONAL_CHAT_ID = os.getenv('YOUR_PERSONAL_CHAT_ID')
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Barber Admin",
+    "site_header": "Barber Shop",
+    "site_brand": "BARBER",
+    "welcome_sign": "Добро пожаловать в систему управления барбершопом",
+    "copyright": "Barber Shop © 2025",
+    "search_model": "auth.User",
+    "user_avatar": None,
+    
+    # Определение пользовательских стилей для улучшения внешнего вида
+    "custom_css": "css/custom_admin.css",
+    
+    # Настройка иконок для лучшего визуального восприятия
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+    },
+    
+    # Добавляем связанные модели для удобной навигации
+    "related_modal_active": True,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    # Используем темную тему, которая лучше подходит для барбершопа
+    "theme": "darkly",  # Более гармоничная темная тема
+    
+    # Цвет бренда для верхней панели
+    "brand_colour": "navbar-dark",
+    
+    # Сохраняем желто-оранжевый акцент
+    "accent": "accent-warning",
+    
+    # Улучшаем верхнюю панель
+    "navbar": "navbar-dark",
+    
+    # Настраиваем боковую панель 
+    "sidebar": "sidebar-dark-warning",  # Темный сайдбар с оранжевыми акцентами
+    
+    # Настройка текста активных элементов
+    "sidebar_nav_small_text": False,
+    
+    # Настройка границы сайдбара для лучшего визуального разделения
+    "no_navbar_border": False,
+    
+    # Настройки кнопок
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-warning",  # Меняем на warning для согласованности с темой
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    
+    # Настраиваем стили текста в фильтрах
+    "actions_sticky_top": False  # Отключаем прилипание действий для лучшей навигации
+}
