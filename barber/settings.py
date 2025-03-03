@@ -31,10 +31,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["vladimirmonin-django-consult-422-17ff.twc1.net"]
+ALLOWED_HOSTS = ["127.0.0.1", "vladimirmonin-django-consult-422-17ff.twc1.net"]
 
 # CSRF настройки для безопасной отправки форм
 CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1",
+    "https://127.0.0.1",
     "https://vladimirmonin-django-consult-422-17ff.twc1.net",
     "http://vladimirmonin-django-consult-422-17ff.twc1.net",
 ]
