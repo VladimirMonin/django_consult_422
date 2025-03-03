@@ -35,8 +35,8 @@ ALLOWED_HOSTS = ["vladimirmonin-django-consult-422-17ff.twc1.net"]
 
 # CSRF настройки для безопасной отправки форм
 CSRF_TRUSTED_ORIGINS = [
-    "https://vladimirmonin-django-consult-422-17ff.twc1.net/",
-    "http://vladimirmonin-django-consult-422-17ff.twc1.net/",
+    "https://vladimirmonin-django-consult-422-17ff.twc1.net",
+    "http://vladimirmonin-django-consult-422-17ff.twc1.net",
 ]
 
 
