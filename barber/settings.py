@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv('DEBUG', 'True') == 'True' else False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", "https://vladimirmonin-django-consult-422-17ff.twc1.net/", "178.253.42.46"]
 
