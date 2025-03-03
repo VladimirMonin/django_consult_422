@@ -4,3 +4,4 @@ pillow
 mistralai
 python-telegram-bot
 django-jazzmin
+tzdata
