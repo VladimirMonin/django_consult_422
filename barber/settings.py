@@ -31,7 +31,14 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv('DEBUG', 'True') == 'True' else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*", "https://vladimirmonin-django-consult-422-17ff.twc1.net/", "178.253.42.46"]
+
+# CSRF настройки для безопасной отправки форм
+CSRF_TRUSTED_ORIGINS = [
+    "https://vladimirmonin-django-consult-422-17ff.twc1.net",
+    "http://178.253.42.46",
+    "https://178.253.42.46"
+]
 
 
 # Application definition
