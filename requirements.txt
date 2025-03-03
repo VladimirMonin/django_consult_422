@@ -4,7 +4,3 @@ pillow
 mistralai
 python-telegram-bot
 django-jazzmin
-celery
-redis
-django-celery-results
-django-celery-beat
