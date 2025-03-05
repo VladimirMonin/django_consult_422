@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "vladimirmonin-django-consult-422-17ff.twc1.net",
     "178.209.127.112",
     "pydeck.ru",
 ]
@@ -46,9 +45,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://178.209.127.112",
     "http://pydeck.ru",
     "https://pydeck.ru",
-    "https://vladimirmonin-django-consult-422-17ff.twc1.net",
-    "http://vladimirmonin-django-consult-422-17ff.twc1.net",
-    "",
 ]
 
 
