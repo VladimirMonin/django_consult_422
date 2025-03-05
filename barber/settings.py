@@ -26,73 +26,83 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "vladimirmonin-django-consult-422-17ff.twc1.net"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "vladimirmonin-django-consult-422-17ff.twc1.net",
+    "178.209.127.112",
+    "pydeck.ru",
+]
 
 # CSRF настройки для безопасной отправки форм
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1",
     "https://127.0.0.1",
+    "http://178.209.127.112",
+    "https://178.209.127.112",
+    "http://pydeck.ru",
+    "https://pydeck.ru",
     "https://vladimirmonin-django-consult-422-17ff.twc1.net",
     "http://vladimirmonin-django-consult-422-17ff.twc1.net",
+    "",
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'core',
+    "jazzmin",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "core",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'barber.urls'
+ROOT_URLCONF = "barber.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'barber.wsgi.application'
+WSGI_APPLICATION = "barber.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -102,16 +112,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -119,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = "ru-RU"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -131,30 +141,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Для авто-модерации отзывов через AI
-MISTRAL_API_KEY = os.getenv('MISTRAL_API_KEY')
-MISTRAL_MODEL = os.getenv('MISTRAL_MODEL')
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+MISTRAL_MODEL = os.getenv("MISTRAL_MODEL")
 
 
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-YOUR_PERSONAL_CHAT_ID = os.getenv('YOUR_PERSONAL_CHAT_ID')
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+YOUR_PERSONAL_CHAT_ID = os.getenv("YOUR_PERSONAL_CHAT_ID")
 
 
 JAZZMIN_SETTINGS = {
@@ -165,23 +175,19 @@ JAZZMIN_SETTINGS = {
     "copyright": "Barber Shop © 2025",
     "search_model": "auth.User",
     "user_avatar": None,
-    
     # Определение пользовательских стилей для улучшения внешнего вида
     "custom_css": "css/mini_fix.css",
-    
     # Настройка иконок для лучшего визуального восприятия
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.group": "fas fa-users",
-        
         # Иконки для моделей барбершопа
-        "core.visit": "fas fa-calendar-check",     # Запись на стрижку
-        "core.master": "fas fa-cut",               # Мастер (ножницы)
-        "core.service": "fas fa-list-alt",         # Услуга
-        "core.review": "fas fa-star",              # Отзыв (звезда)
+        "core.visit": "fas fa-calendar-check",  # Запись на стрижку
+        "core.master": "fas fa-cut",  # Мастер (ножницы)
+        "core.service": "fas fa-list-alt",  # Услуга
+        "core.review": "fas fa-star",  # Отзыв (звезда)
     },
-    
     # Добавляем связанные модели для удобной навигации
     "related_modal_active": True,
 }
@@ -190,25 +196,18 @@ JAZZMIN_SETTINGS = {
 JAZZMIN_UI_TWEAKS = {
     # Используем темную тему, которая лучше подходит для барбершопа
     "theme": "darkly",  # Более гармоничная темная тема
-    
     # Цвет бренда для верхней панели
     "brand_colour": "navbar-dark",
-    
     # Сохраняем желто-оранжевый акцент
     "accent": "accent-warning",
-    
     # Улучшаем верхнюю панель
     "navbar": "navbar-dark",
-    
-    # Настраиваем боковую панель 
+    # Настраиваем боковую панель
     "sidebar": "sidebar-dark-warning",  # Темный сайдбар с оранжевыми акцентами
-    
     # Настройка текста активных элементов
     "sidebar_nav_small_text": False,
-    
     # Настройка границы сайдбара для лучшего визуального разделения
     "no_navbar_border": False,
-    
     # Настройки кнопок
     # Настройка всех типов кнопок для согласованности
     "button_classes": {
@@ -218,9 +217,8 @@ JAZZMIN_UI_TWEAKS = {
         "warning": "btn-warning",
         "danger": "btn-danger",
         "success": "btn-warning",  # Меняем success (зелёную) на warning (оранжевую)
-        "link": "btn-outline-warning"
+        "link": "btn-outline-warning",
     },
-    
     # Настраиваем стили текста в фильтрах
-    "actions_sticky_top": False  # Отключаем прилипание действий для лучшей навигации
+    "actions_sticky_top": False,  # Отключаем прилипание действий для лучшей навигации
 }
