@@ -1,0 +1,50 @@
+# Название нашего workflow для отображения в интерфейсе GitHub
+name: Deploy to VPS
+
+# Указываем когда запускать - при push в main ветку
+on:
+  push:
+    branches: [ main ]
+
+# Определяем задачи для выполнения
+jobs:
+  # Задача №1 - деплой на сервер
+  deploy:
+    # Указываем на какой ОС запускать
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Получаем код из репозитория
+      - uses: actions/checkout@v3
+
+      # Деплоим на сервер через SSH
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          # Используем секреты из GitHub для подключения
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          
+          # Команды выполняемые на сервере
+          script: |
+            # Переходим в директорию проекта
+            cd /home/v/django_consalt_422
+            
+            # Обновляем код из репозитория (с sudo и передачей пароля)
+            echo "${{ secrets.PASSWORD }}" | sudo -S git pull
+            
+            # Активируем виртуальное окружение
+            source venv/bin/activate
+            
+            # Обновляем зависимости
+            pip install -r requirements.txt
+            
+            # Создаем файл .env из отдельных секретов
+            echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
+            echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+            echo "YOUR_PERSONAL_CHAT_ID=${{ secrets.YOUR_PERSONAL_CHAT_ID }}" >> .env
+            echo "MISTRAL_API_KEY=${{ secrets.MISTRAL_API_KEY }}" >> .env
+            
+            # Перезапускаем systemd сервис (с sudo и передачей пароля)
+            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl restart django_consalt
