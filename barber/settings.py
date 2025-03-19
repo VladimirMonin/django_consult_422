@@ -144,9 +144,9 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/v/django_consalt_422/static'
+STATIC_ROOT = '/home/v/django_consult_422/static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/v/django_consalt_422/media'
+MEDIA_ROOT = '/home/v/django_consult_422/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
