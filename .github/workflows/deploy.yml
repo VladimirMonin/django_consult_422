@@ -29,7 +29,7 @@ jobs:
           # Команды выполняемые на сервере
           script: |
             # Переходим в директорию проекта
-            cd /home/v/django_consalt_422
+            cd /home/v/django_consult_422
             
             # Обновляем код из репозитория (с sudo и передачей пароля)
             echo "${{ secrets.PASSWORD }}" | sudo -S git pull
