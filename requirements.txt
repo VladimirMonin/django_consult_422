@@ -5,3 +5,4 @@ mistralai
 python-telegram-bot
 django-jazzmin
 tzdata
+gunicorn

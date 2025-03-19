@@ -45,6 +45,8 @@ jobs:
             echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
             echo "YOUR_PERSONAL_CHAT_ID=${{ secrets.YOUR_PERSONAL_CHAT_ID }}" >> .env
             echo "MISTRAL_API_KEY=${{ secrets.MISTRAL_API_KEY }}" >> .env
-            
-            # Перезапускаем systemd сервис (с sudo и передачей пароля)
-            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl restart django_consalt
+
+            # Сбор статики 
+            python manage.py collectstatic --noinput
+            # Перезапускаем systemd сервис gunicorn а он автоматически перезапустит сайт
+            echo "${{ secrets.PASSWORD }}" | sudo -S systemctl restart gunicorn
